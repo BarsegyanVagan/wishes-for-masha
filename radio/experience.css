@@ -508,57 +508,6 @@ h1 em { color: var(--rose); font-weight: 600; }
 .wishes-scene .message-paper { width: 100%; }
 .letter-body { display: grid; gap: 13px; margin-top: 20px; color: #583c46; line-height: 1.7; }
 .telegram-text { font: 700 1.025rem/1.68 "Courier New", monospace; }
-.signature { margin-top: 18px; color: var(--rose); font: 400 1.8rem/1.2 var(--hand); text-align: right; }
-.karina-scene { display: grid; justify-items: center; gap: 20px; text-align: center; }
-.karina-scene h1 { font-size: clamp(3.05rem, 6.5vw, 5.7rem); }
-.envelope {
-  position: relative;
-  isolation: isolate;
-  display: grid;
-  place-items: center;
-  width: min(100% - 27px, 375px);
-  aspect-ratio: 1.62;
-  margin-top: 8px;
-  padding: 0;
-  overflow: hidden;
-  border: 1px solid #e2b9c5;
-  border-radius: 9px;
-  background: #fff1e8;
-  box-shadow: 0 15px 41px #8b506442;
-  transform: rotate(-4deg);
-  transition: transform .22s ease, box-shadow .22s ease;
-}
-
-.envelope:hover { transform: rotate(-1deg) translateY(-4px); box-shadow: 0 18px 47px #8b50645a; }
-.envelope-paper, .envelope-flap { position: absolute; inset: 0; }
-.envelope-paper {
-  background: conic-gradient(from 56deg at 50% 49%, #efd5d8 0 71deg, #f9e0e0 71deg 175deg, #efcdd4 175deg 240deg, #fff1e7 240deg);
-}
-
-.envelope-flap {
-  z-index: 1;
-  background: linear-gradient(#fff6eb, #f8e0df);
-  clip-path: polygon(0 0, 100% 0, 55% 57%, 50% 60%, 45% 57%);
-  filter: drop-shadow(0 5px 7px #a6677151);
-}
-
-.envelope-seal {
-  z-index: 2;
-  display: grid;
-  place-items: center;
-  width: 54px;
-  aspect-ratio: 1;
-  margin-top: 7%;
-  border: 2px solid #bd6f88;
-  border-radius: 47% 53% 48% 52%;
-  background: radial-gradient(ellipse at 36% 22%, #c87190, #a94567 80%);
-  box-shadow: 0 5px 9px #8154655e, inset 0 0 0 2px #e3a2b28e;
-  color: #fff3ee;
-  font: 400 1.85rem/1 var(--hand);
-}
-
-.envelope-hint { color: var(--muted); }
-
 @media (max-width: 850px) {
   .radio-scene { grid-template-columns: minmax(0, 1fr); max-width: 580px; gap: 23px; }
   .intro-copy h1 { font-size: clamp(3.65rem, 12vw, 5.4rem); text-wrap: initial; }
@@ -602,17 +551,4 @@ h1 em { color: var(--rose); font-weight: 600; }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .001ms !important; transition-duration: .001ms !important; }
-}
-
-.envelope.is-opening .envelope-flap {
-  transform: scaleY(-.55);
-  transform-origin: center top;
-  transition: transform .33s ease, opacity .3s ease;
-  opacity: .6;
-}
-
-.envelope.is-opening .envelope-seal {
-  transform: translate(4px, 16px) rotate(25deg);
-  opacity: 0;
-  transition: transform .27s, opacity .27s;
 }

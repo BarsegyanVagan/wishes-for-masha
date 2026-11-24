@@ -9,9 +9,9 @@
   <title>Эфир для Маши</title>
   <link rel="icon" href="heart.svg" type="image/svg+xml">
   <link rel="stylesheet" href="fonts/fonts.css">
-  <link rel="stylesheet" href="radio/experience.css">
+  <link rel="stylesheet" href="radio/experience.css?v=3">
   <link rel="stylesheet" href="radio/machines.css">
-  <script type="module" src="radio/experience.js?v=2"></script>
+  <script type="module" src="radio/experience.js?v=3"></script>
 </head>
 <body>
   <header class="mast">
@@ -69,7 +69,7 @@
         </div>
         <div class="actions">
           <button class="button secondary" id="replay-voice" type="button" hidden>Послушать ещё раз</button>
-          <button class="button primary" type="button" data-go="film">Открыть киноленту</button>
+          <button class="button primary" id="open-film" type="button">Открыть киноленту</button>
         </div>
       </div>
     </section>
@@ -146,25 +146,6 @@
         <h1 id="wishes-title" tabindex="-1">Пожелания <em>для тебя.</em></h1>
         <div class="letter-body telegram-text" id="wishes-body"></div>
       </div>
-      <button class="button primary" type="button" data-go="karina">Дальше</button>
-    </section>
-
-    <section class="scene note-scene karina-scene" data-scene="karina" aria-labelledby="karina-title" hidden>
-      <h1 id="karina-title" tabindex="-1">А это — моей подруге <em>Карине.</em></h1>
-      <button class="envelope" type="button" aria-label="Открыть письмо для Карины" data-go="karina-letter">
-        <span class="envelope-paper" aria-hidden="true"></span>
-        <span class="envelope-flap" aria-hidden="true"></span>
-        <span class="envelope-seal" aria-hidden="true">К</span>
-      </button>
-      <p class="envelope-hint">Коснись конверта, чтобы открыть.</p>
-    </section>
-
-    <section class="scene note-scene wishes-scene karina-letter-scene" data-scene="karina-letter" aria-labelledby="karina-letter-title" hidden>
-      <article class="message-paper">
-        <h1 id="karina-letter-title" tabindex="-1">Карина, <em>это тебе.</em></h1>
-        <div class="letter-body" id="karina-body"></div>
-        <p class="signature">от <span data-name="senderGenitive">Вагана</span></p>
-      </article>
       <button class="button quiet" id="restart" type="button">Вернуться к радио</button>
     </section>
   </main>

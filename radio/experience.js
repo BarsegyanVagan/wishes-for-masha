@@ -1,4 +1,4 @@
-import { story } from "./story.js?v=2";
+import { story } from "./story.js?v=3";
 import { SoundDesk } from "./sound.js";
 import { connectReceiver } from "./receiver.js";
 import { PhotoPrinter } from "./printer.js";
@@ -24,7 +24,6 @@ document.title = `Эфир для ${story.recipientGenitive}`;
 const scenes = Object.fromEntries(
   [...document.querySelectorAll("[data-scene]")].map(scene => [scene.dataset.scene, scene])
 );
-const paperScenes = new Set(["wishes", "karina", "karina-letter"]);
 const theme = document.querySelector('meta[name="theme-color"]');
 const soundButton = document.querySelector("#sound-toggle");
 let scene = "radio";
@@ -34,7 +33,7 @@ function showScene(target) {
   scenes[scene].hidden = true;
   scene = target;
   const current = scenes[target];
-  const paper = paperScenes.has(target);
+  const paper = target === "wishes";
   document.body.classList.toggle("is-paper", paper);
   theme.content = paper ? "#fff3ef" : "#191419";
   current.hidden = false;
@@ -131,7 +130,6 @@ function paragraphs(container, values) {
 }
 
 paragraphs(document.querySelector("#wishes-body"), story.wishes);
-paragraphs(document.querySelector("#karina-body"), story.karinaLetter);
 
 const writer = new Typewriter({
   machine: document.querySelector("#typewriter"),
@@ -195,25 +193,12 @@ take.addEventListener("click", async () => {
   if (await writer.take()) showScene("wishes");
 });
 
-const envelope = document.querySelector(".envelope");
-for (const button of document.querySelectorAll("[data-go]")) {
-  button.addEventListener("click", async () => {
-    const target = button.dataset.go;
-    if (target === "film") {
-      if (!receiver.isLocked() || scene !== "radio") return;
-      receiver.leave();
-      showScene("film");
-      void printFrame(0);
-    } else if (target === "karina-letter") {
-      button.disabled = true;
-      button.classList.add("is-opening");
-      if (!motion.matches) await new Promise(resolve => setTimeout(resolve, 330));
-      showScene(target);
-    } else {
-      showScene(target);
-    }
-  });
-}
+document.querySelector("#open-film").addEventListener("click", () => {
+  if (!receiver.isLocked() || scene !== "radio") return;
+  receiver.leave();
+  showScene("film");
+  void printFrame(0);
+});
 
 document.querySelector("#restart").addEventListener("click", () => {
   receiver.reset();
@@ -228,7 +213,5 @@ document.querySelector("#restart").addEventListener("click", () => {
   take.hidden = true;
   take.disabled = false;
   writerState.textContent = "На связи. Машинка ждёт сигнал.";
-  envelope.disabled = false;
-  envelope.classList.remove("is-opening");
   showScene("radio");
 });
