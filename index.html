@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#191419">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="description" content="Радио, кинолента и телеграмма от Вагана для Маши.">
+  <title>Эфир для Маши</title>
+  <link rel="icon" href="heart.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="fonts/fonts.css">
+  <link rel="stylesheet" href="radio/experience.css">
+  <link rel="stylesheet" href="radio/machines.css">
+  <script type="module" src="radio/experience.js?v=2"></script>
+</head>
+<body>
+  <header class="mast">
+    <p class="mast-name"><span class="mast-icon" aria-hidden="true"></span> Лично для <span data-name="recipientGenitive">Маши</span></p>
+    <button class="sound-toggle" id="sound-toggle" type="button" aria-pressed="true"><span aria-hidden="true">♫</span> Звук</button>
+  </header>
+
+  <main class="stage">
+    <section class="scene radio-scene" data-scene="radio" aria-labelledby="radio-title">
+      <div class="intro-copy">
+        <p class="hand">Из другого города · от <span data-name="senderGenitive">Вагана</span></p>
+        <h1 id="radio-title" tabindex="-1">Эфир для <em data-name="recipientGenitive">Маши</em>.</h1>
+        <p id="tuning-help">Покрути ручку или двигай метку на шкале. Чем ближе к нужной волне, тем яснее сигнал.</p>
+        <noscript><p>Для настройки радио включи JavaScript в браузере.</p></noscript>
+      </div>
+
+      <div class="receiver" id="receiver" data-power="off">
+        <div class="radio-badge"><span>Радиоприёмник</span><span class="radio-lamp" aria-hidden="true"></span></div>
+        <div class="speaker" aria-hidden="true"></div>
+        <div class="radio-controls">
+          <div class="dial-display">
+            <div class="display-top">
+              <span>FM</span>
+              <output id="frequency" for="tuner">90,2</output>
+              <span>МГц</span>
+            </div>
+            <div class="scale">
+              <div class="dial-ticks" aria-hidden="true"></div>
+              <input id="tuner" type="range" min="875" max="1080" value="902" step="1" aria-label="Частота FM" aria-describedby="tuning-help" disabled>
+              <div class="scale-labels" aria-hidden="true"><span>87,5</span><span>92</span><span>97</span><span>102</span><span>108</span></div>
+            </div>
+            <div class="fine-tune">
+              <button type="button" data-step="-1" aria-label="Уменьшить частоту на 0,1 МГц" disabled>−</button>
+              <button type="button" data-step="1" aria-label="Увеличить частоту на 0,1 МГц" disabled>+</button>
+            </div>
+          </div>
+          <div class="receiver-bottom">
+            <button class="power" id="radio-power" type="button" aria-pressed="false"><span aria-hidden="true"></span> Включить</button>
+            <div class="signal-strength">
+              <div class="meter" id="signal-meter" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+              <p id="radio-state" aria-live="polite">Радио выключено</p>
+            </div>
+            <div class="knob-wrap">
+              <div class="tuning-knob" id="knob" aria-hidden="true"></div>
+              <span>Настройка</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="station-note" id="station-note" hidden>
+        <div>
+          <h2>Волна поймана</h2>
+          <p id="transmission"></p>
+        </div>
+        <div class="actions">
+          <button class="button secondary" id="replay-voice" type="button" hidden>Послушать ещё раз</button>
+          <button class="button primary" type="button" data-go="film">Открыть киноленту</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="scene film-scene" data-scene="film" aria-labelledby="film-title" hidden>
+      <div class="scene-head">
+        <div><p class="hand" id="film-counter">Кадр 1 из 11</p><h1 id="film-title" tabindex="-1">Твоя <em>кинолента.</em></h1></div>
+        <div class="frame-marks" id="frame-marks" aria-hidden="true"></div>
+      </div>
+      <div class="film-layout">
+        <figure class="printer" aria-labelledby="printer-caption">
+          <div class="printer-visual">
+            <img src="radio/assets/photo-printer.webp" width="1280" height="1024" alt="Фотопринтер, из которого выезжает снимок." decoding="async">
+            <canvas width="1280" height="1024" id="printer-canvas" aria-hidden="true"></canvas>
+          </div>
+          <figcaption id="printer-caption" aria-live="polite">Фотопринтер готовится</figcaption>
+        </figure>
+        <div class="film-copy">
+          <figure class="little-print" id="little-print" hidden>
+            <div class="little-image" id="little-image">
+              <img id="printed-photo" alt="" hidden>
+              <span id="photo-placeholder" aria-hidden="true"></span>
+            </div>
+            <figcaption id="photo-caption"></figcaption>
+          </figure>
+          <div class="actions film-actions">
+            <button class="button primary" id="next-photo" type="button" disabled>Следующий кадр</button>
+            <button class="button secondary" id="previous-photo" type="button" hidden>Предыдущий</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="scene telegraph-scene" data-scene="telegraph" aria-labelledby="telegraph-title" hidden>
+      <div class="scene-head">
+        <div><p class="hand">Входящее сообщение</p><h1 id="telegraph-title" tabindex="-1">Телеграмма.</h1></div>
+        <div class="telegraph-indicator" id="telegraph-indicator" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+      </div>
+      <div class="writer-desk">
+        <div class="typewriter" id="typewriter" role="group" aria-label="Красная механическая пишущая машинка с кириллическими клавишами, кареткой и листом бумаги.">
+          <div class="carriage" id="carriage">
+            <div class="paper-release-cover" aria-hidden="true"></div>
+            <div class="paper-sheet" id="paper-sheet" aria-hidden="true">
+              <div class="paper-lines" id="paper-lines"></div>
+            </div>
+            <div class="roller-parts" aria-hidden="true">
+              <div class="roller"></div><div class="roller-scale"></div>
+              <i class="platen-knob left"></i><i class="platen-knob right"></i>
+              <i class="return-lever"></i><i class="release-lever"></i>
+            </div>
+            <button class="lever-target" id="paper-lever" type="button" aria-label="Освободить лист рычагом" hidden></button>
+          </div>
+          <div class="type-base">
+            <div class="type-deck"><div class="typebar" aria-hidden="true"></div></div>
+            <div class="keybed" id="keybed" aria-hidden="true"></div>
+            <div class="type-lip" aria-hidden="true"></div>
+          </div>
+        </div>
+      </div>
+      <div class="telegraph-controls">
+        <p id="writer-state" aria-live="polite">На связи. Машинка ждёт сигнал.</p>
+        <div class="actions">
+          <button class="button primary" id="start-telegram" type="button">Принять телеграмму</button>
+          <button class="button secondary" id="speed" type="button" aria-pressed="false" hidden>Ускорить печать</button>
+          <button class="button primary" id="release-paper" type="button" hidden>Дёрнуть рычаг</button>
+          <button class="button primary" id="take-paper" type="button" hidden>Забрать телеграмму</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="scene note-scene wishes-scene" data-scene="wishes" aria-labelledby="wishes-title" hidden>
+      <div class="message-paper">
+        <p class="hand">Телеграмма от <span data-name="senderGenitive">Вагана</span></p>
+        <h1 id="wishes-title" tabindex="-1">Пожелания <em>для тебя.</em></h1>
+        <div class="letter-body telegram-text" id="wishes-body"></div>
+      </div>
+      <button class="button primary" type="button" data-go="karina">Дальше</button>
+    </section>
+
+    <section class="scene note-scene karina-scene" data-scene="karina" aria-labelledby="karina-title" hidden>
+      <h1 id="karina-title" tabindex="-1">А это — моей подруге <em>Карине.</em></h1>
+      <button class="envelope" type="button" aria-label="Открыть письмо для Карины" data-go="karina-letter">
+        <span class="envelope-paper" aria-hidden="true"></span>
+        <span class="envelope-flap" aria-hidden="true"></span>
+        <span class="envelope-seal" aria-hidden="true">К</span>
+      </button>
+      <p class="envelope-hint">Коснись конверта, чтобы открыть.</p>
+    </section>
+
+    <section class="scene note-scene wishes-scene karina-letter-scene" data-scene="karina-letter" aria-labelledby="karina-letter-title" hidden>
+      <article class="message-paper">
+        <h1 id="karina-letter-title" tabindex="-1">Карина, <em>это тебе.</em></h1>
+        <div class="letter-body" id="karina-body"></div>
+        <p class="signature">от <span data-name="senderGenitive">Вагана</span></p>
+      </article>
+      <button class="button quiet" id="restart" type="button">Вернуться к радио</button>
+    </section>
+  </main>
+</body>
+</html>

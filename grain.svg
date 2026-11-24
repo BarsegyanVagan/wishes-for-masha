@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="170" height="170" viewBox="0 0 170 170">
+  <filter id="noise"><feTurbulence type="fractalNoise" baseFrequency=".87" numOctaves="3" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="linear" slope=".2"/></feComponentTransfer></filter>
+  <path d="M0 0h170v170H0z" filter="url(#noise)" opacity=".3"/>
+</svg>
